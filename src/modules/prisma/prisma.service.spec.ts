@@ -1,13 +1,10 @@
-import { ConfigService } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
 
 describe('PrismaService', () => {
   let prismaService: PrismaService;
-  let configService: ConfigService;
 
   beforeEach(() => {
-    configService = new ConfigService();
-    prismaService = new PrismaService(configService);
+    prismaService = new PrismaService();
   });
 
   afterEach(async () => {

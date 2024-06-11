@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5558:5432
+    environment:
+      POSTGRES_USER: sam_mbabhazi
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: acm
+      DATABASE_URL: postgresql://sam_mbabhazi:pass123@localhost:5558/acm?schema=public

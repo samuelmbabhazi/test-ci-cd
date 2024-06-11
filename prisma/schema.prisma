@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modèle pour la table Ordinateur
+model Ordinateur {
+  tag        String      @id @default(cuid()) // Identifiant unique de l'ordinateur
+  modele     String // Modèle de l'ordinateur
+  fabriquant String? // Fabriquant de l'ordinateur
+  Apprenant  Apprenant[]
+}
+
+// Modèle pour la table Session
+
+// Modèle pour la table Cohorte
+model Cohorte {
+  code        String      @id // Code unique de la cohorte
+  description String // Description de la cohorte
+  Apprenant   Apprenant[]
+}
+
+// Modèle pour la table Apprenant
+model Apprenant {
+  matricule     String     @id @default(cuid()) // Matricule unique de l'apprenant
+  prenom        String // Prénom de l'apprenant
+  nom           String // Nom de l'apprenant
+  postnom       String? // Postnom de l'apprenant
+  dateNaissance DateTime? // Date de naissance de l'apprenant
+  adresse       String // Adresse de l'apprenant
+  email         String // Adresse email de l'apprenant
+  telephone     String // Numéro de téléphone de l'apprenant
+  tagOrdinateur String     @map("tag_ordinateur") // Tag de l'ordinateur attribué
+  codeCohorte   String     @map("code_cohorte") // Code de la cohorte associée
+  ordinateur    Ordinateur @relation(fields: [tagOrdinateur], references: [tag]) // Relation avec la table Ordinateur
+  cohorte       Cohorte    @relation(fields: [codeCohorte], references: [code]) // Relation avec la table Cohorte
+}

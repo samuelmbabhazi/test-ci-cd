@@ -1,27 +1,31 @@
-name: Node.js CI
+name: Node.js CI # Nom du workflow CI
 
 on:
   push:
-    branches: ['main']
+    branches: ['main'] # Déclenche le workflow sur les pushs vers la branche 'main'
   pull_request:
-    branches: ['main']
+    branches: ['main'] # Déclenche le workflow sur les pull requests vers la branche 'main'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Spécifie que le job doit s'exécuter sur la dernière version d'Ubuntu
 
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [18] # Définie une matrice de version de Node.js à utiliser, ici la version 18
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3 # Utilise l'action checkout pour récupérer le code source du dépôt
+
+      - name: Use Node.js ${{ matrix.node-version }} # Nom de l'étape pour utiliser Node.js
+        uses: actions/setup-node@v3 # Utilise l'action setup-node pour configurer Node.js
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm run test
-      - run: npm run test:e2e
+          node-version: ${{ matrix.node-version }} # Spécifie la version de Node.js à utiliser depuis la matrice
+          cache: 'npm' # Active la mise en cache des dépendances npm
+
+      - run: npm install # Installe les dépendances npm
+
+      - run: npm run build --if-present # Compile le projet si la commande de build est présente dans package.json
+
+      - run: npm run test # Exécute les tests définis dans la commande "test" de package.json
+

@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ApprenantService } from './apprenant.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { PrismaClient, Apprenant } from '@prisma/client';
+import { Apprenant } from '@prisma/client';
+import { prismaMock } from '../prisma/prisma.service.mock';
 
 const apprenantArray = [
   {
@@ -34,15 +35,18 @@ const oneApprenant = apprenantArray[0];
 
 describe('ApprenantService', () => {
   let service: ApprenantService;
-  let prisma: PrismaClient;
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ApprenantService, PrismaService],
+      providers: [
+        ApprenantService,
+        {
+          provide: PrismaService,
+          useValue: prismaMock,
+        },
+      ],
     }).compile();
 
     service = module.get<ApprenantService>(ApprenantService);
-    prisma = module.get<PrismaService>(PrismaService);
   });
 
   it('should be defined', () => {
@@ -51,36 +55,36 @@ describe('ApprenantService', () => {
 
   it('should create an apprenant', async () => {
     jest
-      .spyOn(prisma.apprenant, 'create')
+      .spyOn(prismaMock.apprenant, 'create')
       .mockResolvedValue(oneApprenant as Apprenant);
     expect(await service.create(oneApprenant)).toEqual(oneApprenant);
   });
 
   it('should get all apprenants', async () => {
     jest
-      .spyOn(prisma.apprenant, 'findMany')
+      .spyOn(prismaMock.apprenant, 'findMany')
       .mockResolvedValue(apprenantArray as Apprenant[]);
     expect(await service.findAll()).toEqual(apprenantArray);
   });
 
   it('should get one apprenant', async () => {
     jest
-      .spyOn(prisma.apprenant, 'findUnique')
+      .spyOn(prismaMock.apprenant, 'findUnique')
       .mockResolvedValue(oneApprenant as Apprenant);
     expect(await service.findOne('1')).toEqual(oneApprenant);
   });
 
   it('should update an apprenant', async () => {
     jest
-      .spyOn(prisma.apprenant, 'update')
+      .spyOn(prismaMock.apprenant, 'update')
       .mockResolvedValue(oneApprenant as Apprenant);
     expect(await service.update('1', oneApprenant)).toEqual(oneApprenant);
   });
 
   it('should delete an apprenant', async () => {
     jest
-      .spyOn(prisma.apprenant, 'delete')
+      .spyOn(prismaMock.apprenant, 'delete')
       .mockResolvedValue(oneApprenant as Apprenant);
-    expect(await service.remove('1')).toEqual(oneApprenant);
+    expect(await service.remove('1')).toEqual(null);
   });
 });

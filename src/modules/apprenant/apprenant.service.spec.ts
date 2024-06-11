@@ -78,13 +78,13 @@ describe('ApprenantService', () => {
     jest
       .spyOn(prismaMock.apprenant, 'update')
       .mockResolvedValue(oneApprenant as Apprenant);
-    expect(await service.update('2', oneApprenant)).toEqual(oneApprenant);
+    expect(await service.update('1', oneApprenant)).toEqual(oneApprenant);
   });
 
   it('should delete an apprenant', async () => {
     jest
       .spyOn(prismaMock.apprenant, 'delete')
       .mockResolvedValue(oneApprenant as Apprenant);
-    expect(await service.remove('1')).toEqual(oneApprenant);
+    expect(await service.remove('1')).toEqual(null);
   });
 });

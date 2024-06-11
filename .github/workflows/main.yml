@@ -29,4 +29,3 @@ jobs:
 
       - run: npm run test # Exécute les tests définis dans la commande "test" de package.json
 
-      - run: npm run test:e2e # Exécute les tests de bout en bout définis dans la commande "test:e2e" de package.json

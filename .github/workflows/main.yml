@@ -29,3 +29,8 @@ jobs:
 
       - run: npm run test # Exécute les tests définis dans la commande "test" de package.json
 
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}

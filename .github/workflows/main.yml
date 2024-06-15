@@ -39,6 +39,16 @@ jobs:
       - name: Run npm audit
         run: npm audit --audit-level=moderate
 
+      - name: Check coverage threshold
+        run: |
+          COVERAGE=$(npx jest --coverage --coverageReporters=text-summary | grep -oP '(?<=All files[^|]*\|\s+)(\d+\.\d+)(?=\s+\|)')
+          if (( $(echo "$COVERAGE < 60" | bc -l) )); then
+            echo "Test coverage ($COVERAGE%) is below the threshold of 60%."
+            exit 1
+          else
+            echo "Test coverage ($COVERAGE%) is above the threshold of 60%."
+          fi
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:

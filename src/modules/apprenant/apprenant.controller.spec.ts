@@ -69,7 +69,7 @@ describe('ApprenantController', () => {
     expect(await controller.findAll()).toEqual(apprenantArray);
   });
 
-  it('should get one apprenant', async () => {
+  it('should get one apprenant test', async () => {
     expect(await controller.findOne('1')).toEqual(oneApprenant);
   });
 

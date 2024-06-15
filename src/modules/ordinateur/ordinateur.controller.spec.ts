@@ -11,6 +11,7 @@ const oneOrdinateur = ordinateurArray[0];
 
 describe('OrdinateurController', () => {
   let controller: OrdinateurController;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let service: OrdinateurService;
 
   beforeEach(async () => {

@@ -34,7 +34,7 @@ jobs:
           echo "Service ID: ${{ secrets.MY_RENDER_SERVICE_ID }}"
           echo "API Key: ${{ secrets.MY_RENDER_API_KEY }}"
 
-      - name: Deploy to production
+      - name: Deploy to render
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
           service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
